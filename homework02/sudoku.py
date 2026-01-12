@@ -56,7 +56,9 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     ['4', '.', '6']
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
-    """
+     """
+    row, col = pos
+    return grid[row]
     pass
 
 
@@ -69,6 +71,8 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
+    row, col = pos
+    return [grid[i][col] for i in range(len(grid))]
     pass
 
 
@@ -82,6 +86,15 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
+    row, col = pos
+    block_row = (row // 3) * 3
+    block_col = (col // 3) * 3
+
+    values = []
+    for i in range(3):
+        for j in range(3):
+            values.append(grid[block_row + i][block_col + j])
+    return values
     pass
 
 
