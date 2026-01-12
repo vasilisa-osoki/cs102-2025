@@ -170,6 +170,23 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """ Если решение solution верно, то вернуть True, в противном случае False """
     # TODO: Add doctests with bad puzzles
+    for i in range(9):
+        row = get_row(solution, (i, 0))
+        if set(row) != {'1', '2', '3', '4', '5', '6', '7', '8', '9'}:
+            return False
+    
+    for j in range(9):
+        col = get_col(solution, (0, j))
+        if set(col) != {'1', '2', '3', '4', '5', '6', '7', '8', '9'}:
+            return False
+    
+    for block_row in range(0, 9, 3):
+        for block_col in range(0, 9, 3):
+            block = get_block(solution, (block_row, block_col))
+            if set(block) != {'1', '2', '3', '4', '5', '6', '7', '8', '9'}:
+                return False
+    
+    return True
     pass
 
 
