@@ -125,6 +125,13 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
+    all_values = {'1', '2', '3', '4', '5', '6', '7', '8', '9'}
+    row_vals = set(get_row(grid, pos))
+    col_vals = set(get_col(grid, pos))
+    block_vals = set(get_block(grid, pos))
+    used_values = row_vals.union(col_vals).union(block_vals)
+    used_values.discard('.')
+    return all_values - used_values
     pass
 
 
