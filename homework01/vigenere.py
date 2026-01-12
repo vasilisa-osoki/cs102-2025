@@ -12,26 +12,30 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = ""
     keyword = keyword.upper()
     keyword_length = len(keyword)
-    
+
     for i, char in enumerate(plaintext):
         if char.isalpha():
             if char.isupper():
-                alphabet_start = ord('A')
+                alphabet_start = ord("A")
                 key_char = keyword[i % keyword_length]
-                shift = ord(key_char) - ord('A')
-                
-                shifted_char = chr((ord(char) - alphabet_start + shift) % 26 + alphabet_start)
+                shift = ord(key_char) - ord("A")
+
+                shifted_char = chr(
+                    (ord(char) - alphabet_start + shift) % 26 + alphabet_start
+                )
                 ciphertext += shifted_char
             else:
-                alphabet_start = ord('a')
+                alphabet_start = ord("a")
                 key_char = keyword[i % keyword_length].upper()
-                shift = ord(key_char) - ord('A')
-                
-                shifted_char = chr((ord(char) - alphabet_start + shift) % 26 + alphabet_start)
+                shift = ord(key_char) - ord("A")
+
+                shifted_char = chr(
+                    (ord(char) - alphabet_start + shift) % 26 + alphabet_start
+                )
                 ciphertext += shifted_char
         else:
             ciphertext += char
-    
+
     return ciphertext
 
 
@@ -49,24 +53,28 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = ""
     keyword = keyword.upper()
     keyword_length = len(keyword)
-    
+
     for i, char in enumerate(ciphertext):
         if char.isalpha():
             if char.isupper():
-                alphabet_start = ord('A')
+                alphabet_start = ord("A")
                 key_char = keyword[i % keyword_length]
-                shift = ord(key_char) - ord('A')
-                
-                shifted_char = chr((ord(char) - alphabet_start - shift) % 26 + alphabet_start)
+                shift = ord(key_char) - ord("A")
+
+                shifted_char = chr(
+                    (ord(char) - alphabet_start - shift) % 26 + alphabet_start
+                )
                 plaintext += shifted_char
             else:
-                alphabet_start = ord('a')
+                alphabet_start = ord("a")
                 key_char = keyword[i % keyword_length].upper()
-                shift = ord(key_char) - ord('A')
-                
-                shifted_char = chr((ord(char) - alphabet_start - shift) % 26 + alphabet_start)
+                shift = ord(key_char) - ord("A")
+
+                shifted_char = chr(
+                    (ord(char) - alphabet_start - shift) % 26 + alphabet_start
+                )
                 plaintext += shifted_char
         else:
             plaintext += char
-    
+
     return plaintext
