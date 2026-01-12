@@ -20,18 +20,14 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
                 key_char = keyword[i % keyword_length]
                 shift = ord(key_char) - ord("A")
 
-                shifted_char = chr(
-                    (ord(char) - alphabet_start + shift) % 26 + alphabet_start
-                )
+                shifted_char = chr((ord(char) - alphabet_start + shift) % 26 + alphabet_start)
                 ciphertext += shifted_char
             else:
                 alphabet_start = ord("a")
                 key_char = keyword[i % keyword_length].upper()
                 shift = ord(key_char) - ord("A")
 
-                shifted_char = chr(
-                    (ord(char) - alphabet_start + shift) % 26 + alphabet_start
-                )
+                shifted_char = chr((ord(char) - alphabet_start + shift) % 26 + alphabet_start)
                 ciphertext += shifted_char
         else:
             ciphertext += char
@@ -61,18 +57,14 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
                 key_char = keyword[i % keyword_length]
                 shift = ord(key_char) - ord("A")
 
-                shifted_char = chr(
-                    (ord(char) - alphabet_start - shift) % 26 + alphabet_start
-                )
+                shifted_char = chr((ord(char) - alphabet_start - shift) % 26 + alphabet_start)
                 plaintext += shifted_char
             else:
                 alphabet_start = ord("a")
                 key_char = keyword[i % keyword_length].upper()
                 shift = ord(key_char) - ord("A")
 
-                shifted_char = chr(
-                    (ord(char) - alphabet_start - shift) % 26 + alphabet_start
-                )
+                shifted_char = chr((ord(char) - alphabet_start - shift) % 26 + alphabet_start)
                 plaintext += shifted_char
         else:
             plaintext += char
