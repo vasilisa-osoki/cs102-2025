@@ -13,11 +13,19 @@ def remove_wall(
     grid: List[List[Union[str, int]]], coord: Tuple[int, int]
 ) -> List[List[Union[str, int]]]:
     """
+    Удаляет стену между текущей клеткой и соседней
 
-    :param grid:
-    :param coord:
-    :return:
     """
+    x, y = coord
+    directions = []
+    if y + 2 < len(grid[0]):
+        directions.append(('right', (x, y + 2), (x, y + 1)))
+    if x - 2 >= 0:
+        directions.append(('up', (x - 2, y), (x - 1, y)))
+    if directions:
+        direction, next_cell, wall_cell = choice(directions)
+        grid[wall_cell[0]][wall_cell[1]] = " "
+    return grid
 
     pass
 
