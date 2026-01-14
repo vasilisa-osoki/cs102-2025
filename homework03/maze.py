@@ -48,24 +48,26 @@ def bin_tree_maze(
             if x % 2 == 1 and y % 2 == 1:
                 grid[x][y] = " "
                 empty_cells.append((x, y))
-
-    # 1. выбрать любую клетку
-    # 2. выбрать направление: наверх или направо.
-    # Если в выбранном направлении следующая клетка лежит за границами поля,
-    # выбрать второе возможное направление
-    # 3. перейти в следующую клетку, сносим между клетками стену
-    # 4. повторять 2-3 до тех пор, пока не будут пройдены все клетки
-
-    # генерация входа и выхода
-    if random_exit:
-        x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
-        y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
-        y_out = randint(0, cols - 1) if x_out in (0, rows - 1) else choice((0, cols - 1))
+    for cell in empty_cells:
+        grid = remove_wall(grid, cell)
+    if not random_exit:
+        grid[rows - 2][1] = "X"
+        grid[1][cols - 2] = "X"
     else:
-        x_in, y_in = 0, cols - 2
-        x_out, y_out = rows - 1, 1
-
-    grid[x_in][y_in], grid[x_out][y_out] = "X", "X"
+        exits = []
+        while len(exits) < 2:
+            side = choice(['top', 'bottom', 'left', 'right'])
+            if side == 'top':
+                x, y = 0, randint(1, cols - 2)
+            elif side == 'bottom':
+                x, y = rows - 1, randint(1, cols - 2)
+            elif side == 'left':
+                x, y = randint(1, rows - 2), 0
+            elif
+                x, y = randint(1, rows - 2), cols - 1
+            if (x, y) not in [(0, 0), (0, cols-1), (rows-1, 0), (rows-1, cols-1)]:
+                exits.append((x, y))
+                grid[x][y] = "X"
 
     return grid
 
