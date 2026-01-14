@@ -186,11 +186,38 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
 def solve_maze(
     grid: List[List[Union[str, int]]],
 ) -> Tuple[List[List[Union[str, int]]], Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]]:
-    """
 
-    :param grid:
-    :return:
     """
+    Решает лабиринт: находит путь от входа к выходу
+
+    """
+    exits = get_exits(grid)
+    if len(exits) == 1:
+        return grid, exits[0]
+    
+    if len(exits) != 2:
+        return grid, None
+    for exit_coord in exits:
+        if encircled_exit(grid, exit_coord):
+            return grid, None
+    maze = deepcopy(grid)
+    start, end = exits[0], exits[1]
+    for i in range(len(maze)):
+        for j in range(len(maze[0])):
+            if maze[i][j] == " ":
+                maze[i][j] = 0
+
+    maze[start[0]][start[1]] = 1
+    maze[end[0]][end[1]] = 0
+    k = 1
+    while maze[end[0]][end[1]] == 0:
+        maze = make_step(maze, k)
+        k += 1
+        if k > len(maze) * len(maze[0]):
+            return grid, None
+    path = shortest_path(maze, end)
+    
+    return maze, path
 
     pass
 
