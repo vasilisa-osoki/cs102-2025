@@ -8,7 +8,12 @@ Grid = List[List[int]]
 
 
 class GameOfLife:
-    def __init__(self, size: Tuple[int, int], randomize: bool = True, max_generations: Optional[int] = None) -> None:
+    def __init__(
+        self,
+        size: Tuple[int, int],
+        randomize: bool = True,
+        max_generations: Optional[int] = None,
+    ) -> None:
         """Инициализация игры Жизнь"""
         self.rows, self.cols = size
         self.prev_generation = self.create_grid(False)
@@ -35,7 +40,16 @@ class GameOfLife:
         neighbours = []
 
         # Все возможные направления соседей
-        directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+        directions = [
+            (-1, -1),
+            (-1, 0),
+            (-1, 1),
+            (0, -1),
+            (0, 1),
+            (1, -1),
+            (1, 0),
+            (1, 1),
+        ]
 
         for dr, dc in directions:
             new_row, new_col = row + dr, col + dc

@@ -34,7 +34,12 @@ class GUI(UI):
         for i in range(self.life.rows):
             for j in range(self.life.cols):
                 color = pygame.Color("green") if self.life.curr_generation[i][j] == 1 else pygame.Color("white")
-                rect = pygame.Rect(j * self.cell_size, i * self.cell_size, self.cell_size, self.cell_size)
+                rect = pygame.Rect(
+                    j * self.cell_size,
+                    i * self.cell_size,
+                    self.cell_size,
+                    self.cell_size,
+                )
                 pygame.draw.rect(self.screen, color, rect)
 
     def run(self) -> None:
