@@ -16,9 +16,11 @@ class GameOfLife:
         self.cell_size = cell_size
         self.speed = speed
         
+        # Вычисляем количество клеток
         self.cell_width = self.width // self.cell_size
         self.cell_height = self.height // self.cell_size
         
+        # Создаем окно
         self.screen_size = width, height
         self.screen = None
         self.grid = None
@@ -117,13 +119,20 @@ class GameOfLife:
         self.grid = self.create_grid(randomize=True)
         
         running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    running = False
             
+            # Очищаем экран
             self.screen.fill(pygame.Color('white'))
             
+            # Отрисовываем и обновляем
             self.draw_grid()
             self.draw_lines()
             self.grid = self.get_next_generation()
             
+            # Обновляем экран
             pygame.display.flip()
             clock.tick(self.speed)
         
@@ -132,7 +141,4 @@ class GameOfLife:
 
 if __name__ == '__main__':
     game = GameOfLife(320, 240, 20)
-    game.run()            for event in pygame.event.get():
-                if event.type == QUIT:
-                    running = False
-
+    game.run()
