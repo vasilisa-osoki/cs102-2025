@@ -51,7 +51,7 @@ def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> L
 
     for current_cell in empty_cells:
         remove_wall(grid, current_cell)
-    
+
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
         y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
@@ -59,9 +59,9 @@ def bin_tree_maze(rows: int = 15, cols: int = 15, random_exit: bool = True) -> L
     else:
         x_in, y_in = 0, cols - 2
         x_out, y_out = rows - 1, 1
-    
+
     grid[x_in][y_in], grid[x_out][y_out] = "X", "X"
-    
+
     return grid
 
 
@@ -223,6 +223,7 @@ def solve_maze(
     path_from_enter_to_exit = path_from_exit_to_enter
 
     return maze, path_from_enter_to_exit
+
 
 def add_path_to_grid(
     grid: List[List[Union[str, int]]],
