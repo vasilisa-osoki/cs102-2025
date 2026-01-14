@@ -108,12 +108,42 @@ def shortest_path(
 
 
 def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
-    """
 
-    :param grid:
-    :param coord:
-    :return:
     """
+    Проверяет, окружён ли выход стенами (тупик)
+
+    """
+    x, y = coord
+    rows, cols = len(grid), len(grid[0])
+    if (x == 0 or x == rows - 1) and (y == 0 or y == cols - 1):
+        count_walls = 0
+        if x == 0:
+            if grid[x + 1][y] == "■": count_walls += 1
+        else:
+            if grid[x - 1][y] == "■": count_walls += 1
+        
+        if y == 0:
+            if grid[x][y + 1] == "■": count_walls += 1
+        else:
+            if grid[x][y - 1] == "■": count_walls += 1
+        
+        return count_walls >= 2
+
+    if x == 0 or x == rows - 1 or y == 0 or y == cols - 1:
+        count_walls = 0
+        neighbors = []
+        if x > 0: neighbors.append((x - 1, y))
+        if x < rows - 1: neighbors.append((x + 1, y))
+        if y > 0: neighbors.append((x, y - 1))
+        if y < cols - 1: neighbors.append((x, y + 1))
+        
+        for nx, ny in neighbors:
+            if grid[nx][ny] == "■":
+                count_walls += 1
+        
+        return count_walls >= 3
+    
+    return False
 
     pass
 
