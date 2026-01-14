@@ -26,7 +26,23 @@ class GameOfLife:
         self.grid = None
 
     def create_grid(self, randomize: bool = False):
-        """Создание сетки"""
+        """
+        Создание списка клеток.
+
+        Клетка считается живой, если ее значение равно 1, в противном случае клетка
+        считается мертвой, то есть, ее значение равно 0.
+
+        Parameters
+        ----------
+        randomize : bool
+            Если значение истина, то создается матрица, где каждая клетка может
+            быть равновероятно живой или мертвой, иначе все клетки создаются мертвыми.
+
+        Returns
+        ----------
+        out : Grid
+            Матрица клеток размером `cell_height` х `cell_width`.
+        """
         grid = []
         for i in range(self.cell_height):
             row = []
@@ -56,7 +72,9 @@ class GameOfLife:
             )
 
     def draw_grid(self) -> None:
-        """Рисование клеток"""
+        """
+        Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
+        """
         for i in range(self.cell_height):
             for j in range(self.cell_width):
                 if self.grid[i][j] == 1:
@@ -76,7 +94,23 @@ class GameOfLife:
                 )
 
     def get_neighbours(self, cell):
-        """Получение соседей (упрощенная версия)"""
+        """
+        Вернуть список соседних клеток для клетки `cell`.
+
+        Соседними считаются клетки по горизонтали, вертикали и диагоналям,
+        то есть, во всех направлениях.
+
+        Parameters
+        ----------
+        cell : Cell
+            Клетка, для которой необходимо получить список соседей. Клетка
+            представлена кортежем, содержащим ее координаты на игровом поле.
+
+        Returns
+        ----------
+        out : Cells
+            Список соседних клеток, в котором каждая позиция – 0 или 1.
+        """
         row, col = cell
         neighbours = []
         
@@ -92,7 +126,9 @@ class GameOfLife:
         return neighbours
 
     def get_next_generation(self):
-        """Следующее поколение"""
+        """
+        Получить следующее поколение клеток.
+        """
         new_grid = self.create_grid(False)
         
         for i in range(self.cell_height):
