@@ -110,11 +110,35 @@ def shortest_path(
     grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
 ) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
     """
+    Восстанавливает кратчайший путь по размеченному лабиринту
 
-    :param grid:
-    :param exit_coord:
-    :return:
     """
+    ex, ey = exit_coord
+    if grid[ex][ey] == 0:
+        return None
+    path = [(ex, ey)]
+    k = grid[ex][ey]
+    while k > 1:
+        x, y = path[-1]
+        found = False
+        for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < len(grid) and 0 <= ny < len(grid[0]):
+                if grid[nx][ny] == k - 1:
+                    path.append((nx, ny))
+                    k -= 1
+                    found = True
+                    break
+        
+        if not found:
+            grid[x][y] = " "
+            path.pop()
+            if not path:
+                return None
+            k = grid[path[-1][0]][path[-1][1]]
+    
+    path.reverse()
+    return path
     pass
 
 
