@@ -85,12 +85,23 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
 
 
 def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str, int]]]:
-    """
 
-    :param grid:
-    :param k:
-    :return:
     """
+    Выполняет один шаг волнового алгоритма
+
+    """
+    rows, cols = len(grid), len(grid[0])
+    
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == k:
+                for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                    ni, nj = i + dx, j + dy
+                    if 0 <= ni < rows and 0 <= nj < cols:
+                        if grid[ni][nj] == 0 or grid[ni][nj] == " ":
+                            grid[ni][nj] = k + 1
+    
+    return grid
 
     pass
 
