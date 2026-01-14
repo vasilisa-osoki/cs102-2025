@@ -34,11 +34,8 @@ def bin_tree_maze(
     rows: int = 15, cols: int = 15, random_exit: bool = True
 ) -> List[List[Union[str, int]]]:
     """
+    Генерирует лабиринт алгоритмом двоичного дерева
 
-    :param rows:
-    :param cols:
-    :param random_exit:
-    :return:
     """
 
     grid = create_grid(rows, cols)
@@ -74,10 +71,15 @@ def bin_tree_maze(
 
 def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     """
+    Находит координаты всех выходов (клеток с 'X')
 
-    :param grid:
-    :return:
     """
+    exits = []
+    for i, row in enumerate(grid):
+        for j, cell in enumerate(row):
+            if cell == "X":
+                exits.append((i, j))
+    return exits
 
     pass
 
