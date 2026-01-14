@@ -186,14 +186,21 @@ def solve_maze(
     :param grid:
     :return:
     """
+    doors = get_exits(grid)
 
     if len(doors) != 2:
         return grid, None if not doors else [doors[0]]
+
+    start, end = doors
+
     if encircled_exit(grid, start):
         return grid, None
 
     maze = deepcopy(grid)
 
+    for i in range(len(maze)):
+        for j in range(len(maze[0])):
+            if maze[i][j] == "X":
                 maze[i][j] = 1 if (i, j) == start else 0
             elif maze[i][j] == " ":
                 maze[i][j] = 0
@@ -216,7 +223,6 @@ def solve_maze(
     path_from_enter_to_exit = path_from_exit_to_enter
 
     return maze, path_from_enter_to_exit
-
 
 def add_path_to_grid(
     grid: List[List[Union[str, int]]],
