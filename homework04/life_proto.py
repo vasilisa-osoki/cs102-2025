@@ -1,5 +1,6 @@
 import random
-from typing import Optional, List, Tuple  # ← добавили импорты типов
+from typing import List, Optional, Tuple
+
 import pygame
 from pygame.locals import *
 
