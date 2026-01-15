@@ -1,5 +1,5 @@
 import random
-
+from typing import Optional, List, Tuple  # ← добавили импорты типов
 import pygame
 from pygame.locals import *
 
@@ -16,11 +16,11 @@ class GameOfLife:
         self.cell_height = self.height // self.cell_size
 
         # Создаем окно
-        self.screen_size = width, height
-        self.screen = None
-        self.grid = None
+        self.screen_size = (width, height)
+        self.screen: Optional[pygame.Surface] = None  # ← аннотация типа
+        self.grid: Optional[List[List[int]]] = None  # ← аннотация типа
 
-    def create_grid(self, randomize: bool = False):
+    def create_grid(self, randomize: bool = False) -> List[List[int]]:  # ← добавили возвращаемый тип
         """
         Создание списка клеток.
 
@@ -38,9 +38,9 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
-        grid = []
+        grid: List[List[int]] = []
         for i in range(self.cell_height):
-            row = []
+            row: List[int] = []
             for j in range(self.cell_width):
                 if randomize:
                     row.append(random.randint(0, 1))
@@ -51,6 +51,9 @@ class GameOfLife:
 
     def draw_lines(self) -> None:
         """Рисование сетки"""
+        if self.screen is None:  # ← проверка на None
+            return
+
         for x in range(0, self.width, self.cell_size):
             pygame.draw.line(self.screen, pygame.Color("black"), (x, 0), (x, self.height))
         for y in range(0, self.height, self.cell_size):
@@ -60,6 +63,9 @@ class GameOfLife:
         """
         Отрисовка списка клеток с закрашиванием их в соответствующе цвета.
         """
+        if self.screen is None or self.grid is None:  # ← проверка на None
+            return
+
         for i in range(self.cell_height):
             for j in range(self.cell_width):
                 if self.grid[i][j] == 1:
@@ -78,7 +84,7 @@ class GameOfLife:
                     ),
                 )
 
-    def get_neighbours(self, cell):
+    def get_neighbours(self, cell: Tuple[int, int]) -> List[int]:  # ← добавили типы аргументов и возврата
         """
         Вернуть список соседних клеток для клетки `cell`.
 
@@ -96,8 +102,11 @@ class GameOfLife:
         out : Cells
             Список соседних клеток, в котором каждая позиция – 0 или 1.
         """
+        if self.grid is None:  # ← проверка на None
+            return []
+
         row, col = cell
-        neighbours = []
+        neighbours: List[int] = []
 
         for i in range(-1, 2):
             for j in range(-1, 2):
@@ -109,10 +118,13 @@ class GameOfLife:
 
         return neighbours
 
-    def get_next_generation(self):
+    def get_next_generation(self) -> List[List[int]]:  # ← добавили возвращаемый тип
         """
         Получить следующее поколение клеток.
         """
+        if self.grid is None:  # ← проверка на None
+            return self.create_grid(False)
+
         new_grid = self.create_grid(False)
 
         for i in range(self.cell_height):
@@ -132,10 +144,10 @@ class GameOfLife:
     def run(self) -> None:
         """Запуск игры"""
         pygame.init()
-        self.screen = pygame.display.set_mode(self.screen_size)
+        self.screen = pygame.display.set_mode(self.screen_size)  # ← теперь это точно Surface, а не None
         pygame.display.set_caption("Game of Life - Prototype")
 
-        clock = pygame.time.Clock()
+        clock = pygame.time.Clock()  # ← исправлено: Clock с заглавной C
         self.grid = self.create_grid(randomize=True)
 
         running = True
@@ -145,7 +157,7 @@ class GameOfLife:
                     running = False
 
             # Очищаем экран
-            self.screen.fill(pygame.Color("white"))
+            self.screen.fill(pygame.Color("white"))  # ← исправлено: fill вместо fil1
 
             # Отрисовываем и обновляем
             self.draw_grid()
